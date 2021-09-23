@@ -1,4 +1,4 @@
-@echo off
+@echo on
 :: CMDTheme - Theme Command Prompt
 if not exist "%AppData%\CMDTheme" ( mkdir "%AppData%\CMDTheme")
 set "themech=%1"
@@ -10,9 +10,10 @@ set "Default=None"
 call "%AppData%\CMDTheme\default.bat"
 )
 if exist "%temp%\themes.log" ( del "%temp%\themes.log")
-for /f "delims=" %%p in ('powershell dir -Path %CMDTPath%\Themes -Filter *.cmd -Name') do echo    %%p>> %temp%\themes.log
+for /f "delims=" %%p in ('powershell dir -Path "%CMDTPath%\Themes" -Filter *.cmd -Name') do echo    %%p>> %temp%\themes.log
 if exist "%temp%\themes2.log" ( del "%temp%\themes2.log")
 powershell get-content "$env:temp\themes.log" ^| foreach{$_ -replace """.cmd""",""""""}^> $env:temp\themes2.log
+pause
 cls
 :themes
 cls
@@ -31,12 +32,9 @@ if defined themech ( goto RunTheme)
 
 echo.
 echo    What theme you want to use?
-echo    Typing [4mSettings[0m will put you on CMDTheme Settings
+echo    Typing [4mExit[0m will exit
 set /p "themech=[0m   > "
 
-if "%themech%"=="Settings" ( goto Settings)
-if "%themech%"=="settings" ( goto Settings)
-if "%themech%"=="SETTINGS" ( goto Settings)
 if "%themech%"=="exit" ( exit/b)
 if "%themech%"=="EXIT" ( exit/b)
 if "%themech%"=="Exit" ( exit/b)
@@ -109,116 +107,3 @@ goto RunTheme
 :modifyscr
 notepad %CMDTPath%\Themes\%themech%.cmd
 goto RunTheme
-
-:settings
-cls
-echo.
-if "%applied%"=="1" ( echo    Applied. Restart CMDTheme to see the changes. & set "applied=")
-echo  -------------------------------------------------
-echo    [37mCMD[91mT[32mh[33me[34mm[35me[0m - Settings                    v1.0.0
-echo  -------------------------------------------------
-echo.
-if "%supuni%"=="1" (
-echo    1 [X] Support Unicode [UTF-8]
-) else (
-echo    1 [ ] Support Unicode [UTF-8]
-)
-
-if "%runcmdst%"=="1" (
-echo    2 [X] Run on CMD Startup [91m[NOT RECOMMENDED][0m
-) else (
-echo    2 [ ] Run on CMD Startup [91m[NOT RECOMMENDED][0m
-)
-
-if "%runstcmd%"=="1" (
-echo    3 [X] Run startup files on CMD Startup
-) else (
-echo    3 [ ] Run startup files on CMD Startup
-)
-
-if "%chkupd%"=="1" (
-echo    4 [X] Check for updates weekly
-) else (
-echo    4 [ ] Check for updates weekly
-)
-
-if "%disthe%"=="1" (
-echo    5 [X] Disable all themes
-) else (
-echo    5 [ ] Disable all themes
-)
-
-echo.
-echo    [0] Go back
-echo    [A] Apply settings
-echo    [U] Apply settings to all users [NEEDS ADMIN]
-choice /c 123450au /n /m "[0m   > "
-if "%errorlevel%"=="1" ( goto supuni)
-if "%errorlevel%"=="2" ( goto runcmdst)
-if "%errorlevel%"=="3" ( goto runstcmd)
-if "%errorlevel%"=="4" ( goto chkupd)
-if "%errorlevel%"=="5" ( goto disthe)
-if "%errorlevel%"=="6" ( set "themech=" & goto themes)
-if "%errorlevel%"=="7" ( goto apply)
-if "%errorlevel%"=="8" ( goto applyall)
-
-:supuni
-if "%supuni%"=="" (
-set "supuni=1"
-goto settings
-)
-if "%supuni%"=="1" (
-set "supuni="
-goto settings
-)
-:runcmdst
-if "%runcmdst%"=="" (
-set "runcmdst=1"
-goto settings
-)
-if "%runcmdst%"=="1" (
-set "runcmdst="
-goto settings
-)
-
-:runstcmd
-if "%runstcmd%"=="" (
-set "runstcmd=1"
-goto settings
-)
-if "%runstcmd%"=="1" (
-set "runstcmd="
-goto settings
-)
-
-:chkupd
-if "%chkupd%"=="" (
-set "chkupd=1"
-goto settings
-)
-if "%chkupd%"=="1" (
-set "chkupd="
-goto settings
-)
-
-:disthe
-if "%disthe%"=="" (
-set "disthe=1"
-goto settings
-)
-if "%disthe%"=="1" (
-set "disthe="
-goto settings
-)
-
-:apply
-(echo set "supuni=%supuni%"
-echo set "runcmdst=%runcmdst%"
-echo set "runstcmd=%runstcmd%"
-echo set "chkupd=%chkupd%"
-echo set "disthe=%disthe%")>"%AppData%\CMDTheme\config.bat"
-
-set "applied=1"
-goto settings
-
-:
