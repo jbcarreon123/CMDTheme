@@ -15,3 +15,10 @@ Theme Command Prompt (cmd.exe) in an easy way
 4. The installer should download [aria2](https://aria2.github.io/) and extract it.
 5. The installer should download the files.
 6. Setup is complete. Press any key to go to CMDTheme Settings.
+
+## Create your own theme
+1. Download this template:
+   - [Example.cmd](https://github.com/jbcarreon123/CMDTheme/raw/main/Example.cmd)
+2. Open the file on Notepad, or your text editor you use.
+3. After you edit it, save the file on [PATH of CMDTheme]/Themes.
+4. You should see it on CMDTheme Settings and set it as default.
