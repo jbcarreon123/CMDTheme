@@ -22,3 +22,4 @@ Theme Command Prompt (cmd.exe) in an easy way
 2. Open the file on Notepad, or your text editor you use.
 3. After you edit it, save the file on [PATH of CMDTheme]/Themes.
 4. You should see it on CMDTheme Settings and set it as default.
+### 5. [OPTIONAL] Post your Custom Themes [Here!](https://github.com/jbcarreon123/CMDTheme/discussions/categories/show-tell-and-share)
