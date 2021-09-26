@@ -1,4 +1,4 @@
-@echo on
+@echo off
 :: CMDTheme - Theme Command Prompt
 if not exist "%AppData%\CMDTheme" ( mkdir "%AppData%\CMDTheme")
 set "themech=%1"
@@ -13,7 +13,7 @@ if exist "%temp%\themes.log" ( del "%temp%\themes.log")
 for /f "delims=" %%p in ('powershell dir -Path "%CMDTPath%\Themes" -Filter *.cmd -Name') do echo    %%p>> %temp%\themes.log
 if exist "%temp%\themes2.log" ( del "%temp%\themes2.log")
 powershell get-content "$env:temp\themes.log" ^| foreach{$_ -replace """.cmd""",""""""}^> $env:temp\themes2.log
-pause
+
 cls
 :themes
 cls
